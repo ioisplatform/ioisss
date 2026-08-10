@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | IOIS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top, #123a3a, #071313 55%, #030707);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 470px;
+            background: rgba(10,20,20,.95);
+            border: 1px solid rgba(212,175,55,.35);
+            border-radius: 22px;
+            padding: 32px;
+            box-shadow: 0 20px 70px rgba(0,0,0,.45);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #d4af37;
+        }
+
+        .brand p {
+            color: #aebbbb;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 17px 0 7px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #345050;
+            background: #0d1b1b;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #d4af37;
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 55px;
+        }
+
+        .toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 5px;
+            background: transparent;
+            color: #d4af37;
+        }
+
+        button {
+            width: 100%;
+            border: 0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 22px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg,#d4af37,#f1d46a);
+            color: #071313;
+        }
+
+        button:disabled {
+            opacity: .6;
+        }
+
+        .message {
+            display: none;
+            padding: 13px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(25,135,84,.18);
+            border: 1px solid rgba(25,135,84,.45);
+            color: #a8f0c8;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(220,53,69,.15);
+            border: 1px solid rgba(220,53,69,.45);
+            color: #ffb4bd;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 22px;
+            line-height: 2;
+        }
+
+        a {
+            color: #d4af37;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .home {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #aebbbb;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="brand">
+        <h1>IOIS</h1>
+        <p>
+            Indian Online Income Supporting System
+            <br>
+            अपने account में Login करें
+        </p>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <form id="loginForm">
+
+        <label for="email">Email</label>
+
+        <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="example@email.com"
+            required
+        >
+
+        <label for="password">Password</label>
+
+        <div class="password-wrap">
+
+            <input
+                id="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Password"
+                required
+            >
+
+            <button
+                type="button"
+                id="togglePassword"
+                class="toggle"
+            >
+                👁
+            </button>
+
+        </div>
+
+        <button
+            id="loginButton"
+            type="submit"
+        >
+            Login
+        </button>
+
+    </form>
+
+    <div class="links">
+
+        <div>
+            <a href="reset-password.html">
+                Password भूल गए?
+            </a>
+        </div>
+
+        <div>
+            Account नहीं है?
+            <a href="register.html">
+                Register करें
+            </a>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="home">
+        ← Home पर वापस जाएँ
+    </a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="login.js"></script>
+
+<script src="common.js"></script></body>
+</html>

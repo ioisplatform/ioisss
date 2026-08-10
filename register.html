@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IOIS Registration | Indian Online Income Supporting System</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top,#163f3d,#071313 52%,#020606);color:#fff;padding:24px}.wrap{width:min(980px,100%);margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand{color:#d4af37;font-weight:900;font-size:28px}.top a{color:#cbd5e1;text-decoration:none}.card{background:rgba(8,19,19,.96);border:1px solid rgba(212,175,55,.28);border-radius:24px;padding:28px;box-shadow:0 25px 90px #0008}.hero{text-align:center;margin-bottom:24px}.hero h1{margin:0;color:#d4af37;font-size:clamp(28px,5vw,42px)}.hero p{color:#aebbbb;line-height:1.6}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:16px}.field label{display:block;margin-bottom:7px;font-weight:800;color:#e5eeee}.field input,.field select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #345050;background:#0b1818;color:#fff;font-size:15px;outline:none}.field input:focus,.field select:focus{border-color:#d4af37}.password{position:relative}.password input{padding-right:55px}.toggle{position:absolute;right:8px;top:7px;width:40px;height:40px;border:0;background:transparent;color:#d4af37;cursor:pointer}.section{border-top:1px solid #233535;margin-top:8px;padding-top:20px}.section h2{font-size:20px;margin:0 0 6px}.hint{font-size:13px;color:#8ea1a1;margin:0 0 14px;line-height:1.5}.planbox{display:grid;grid-template-columns:1fr auto;gap:15px;align-items:center;border:1px solid rgba(212,175,55,.35);background:linear-gradient(135deg,#101f1f,#0a1515);border-radius:16px;padding:16px;margin-bottom:18px}.price{font-size:28px;color:#d4af37;font-weight:900}.services{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.service{position:relative;display:flex;align-items:flex-start;gap:10px;padding:13px;border:1px solid #294040;border-radius:13px;background:#0b1818;cursor:pointer;transition:.2s}.service:hover{border-color:#d4af37}.service input{accent-color:#d4af37;margin-top:3px}.service span{font-size:14px;line-height:1.35}.service small{display:block;color:#819292;margin-top:3px}.selectbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.mini{border:1px solid #3c5555;background:#0b1818;color:#d4af37;border-radius:9px;padding:7px 10px;cursor:pointer}.terms{display:flex;gap:10px;align-items:flex-start;color:#aebbbb;font-size:13px;line-height:1.5;margin:18px 0}.terms input{margin-top:3px}.btn{width:100%;border:0;border-radius:13px;padding:15px;background:linear-gradient(135deg,#d4af37,#f1d46a);color:#071313;font-weight:900;font-size:16px;cursor:pointer}.btn:disabled{opacity:.6;cursor:not-allowed}.msg{display:none;padding:13px;border-radius:11px;margin-bottom:16px;line-height:1.5}.msg.show{display:block}.msg.ok{background:#0d2a1c;border:1px solid #2c8b58;color:#b5f5ce}.msg.err{background:#32151a;border:1px solid #9d3d4d;color:#ffc0c8}.bottom{text-align:center;color:#9aa8a8;margin-top:18px}.bottom a{color:#d4af37;text-decoration:none;font-weight:800}.selected{color:#9ee6bb;font-size:13px}@media(max-width:700px){body{padding:12px}.card{padding:18px}.grid,.services{grid-template-columns:1fr}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><div class="brand">IOIS</div><a href="index.html">← Home</a></div>
+<div class="card">
+<div class="hero"><h1>IOIS Registration</h1><p>एक ही official registration system — Membership, Services, Referral और Account एक जगह।</p></div>
+<div id="message" class="msg"></div>
+<form id="registerForm" novalidate>
+<div class="section" style="border-top:0;padding-top:0"><h2>1. Membership चुनें</h2><p class="hint">Plan बदलते ही उसी plan की available services नीचे दिखेंगी।</p>
+<div class="field"><label for="plan">Membership Plan *</label><select id="plan" required></select></div>
+<div id="planSummary" class="planbox"><div><strong id="planName">—</strong><div class="hint" id="planDisplay">—</div></div><div class="price" id="planPrice">₹0</div></div></div>
+<div class="section"><h2>2. अपनी Services चुनें</h2><p class="hint">कम से कम 1 service चुनना जरूरी है। चुनी गई services आपके member profile में save होंगी।</p><div class="selectbar"><span class="selected" id="serviceCount">0 services selected</span><button type="button" class="mini" id="selectAll">सभी चुनें</button></div><div id="services" class="services"></div></div>
+<div class="section"><h2>3. Personal Details</h2><div class="grid">
+<div class="field"><label for="fullName">पूरा नाम *</label><input id="fullName" autocomplete="name" required placeholder="अपना पूरा नाम"></div>
+<div class="field"><label for="mobile">मोबाइल नंबर *</label><input id="mobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" required placeholder="10 digit mobile number"></div>
+<div class="field"><label for="email">Email *</label><input id="email" type="email" autocomplete="email" required placeholder="example@email.com"></div>
+<div class="field"><label for="referral">Referral Code (optional)</label><input id="referral" placeholder="यदि किसी ने refer किया है"></div>
+</div></div>
+<div class="section"><h2>4. Secure Password</h2><div class="grid">
+<div class="field"><label for="password">Password *</label><div class="password"><input id="password" type="password" minlength="8" autocomplete="new-password" required placeholder="कम से कम 8 characters"><button class="toggle" type="button" id="togglePassword">👁</button></div></div>
+<div class="field"><label for="confirmPassword">Confirm Password *</label><div class="password"><input id="confirmPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Password दोबारा लिखें"><button class="toggle" type="button" id="toggleConfirmPassword">👁</button></div></div>
+</div></div>
+<label class="terms"><input id="terms" type="checkbox" required><span>मैंने अपना नाम, mobile, email और चुनी गई services सही दर्ज की हैं और IOIS registration की शर्तों को स्वीकार करता/करती हूँ।</span></label>
+<button id="registerButton" class="btn" type="submit">Create IOIS Account</button>
+</form>
+<div class="bottom">पहले से account है? <a href="login.html">Login करें</a></div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="register.js"></script>
+<script src="common.js"></script>
+</body></html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard | IOIS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #071313;
+            color: #fff;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: rgba(7,19,19,.96);
+            border-bottom: 1px solid rgba(212,175,55,.25);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand {
+            color: #d4af37;
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .logout {
+            border: 1px solid rgba(212,175,55,.45);
+            background: transparent;
+            color: #d4af37;
+            border-radius: 10px;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px 20px 60px;
+        }
+
+        .welcome {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(212,175,55,.14),
+                    rgba(17,55,55,.55)
+                );
+            border: 1px solid rgba(212,175,55,.22);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin: 0 0 8px;
+            font-size: clamp(25px, 5vw, 38px);
+        }
+
+        .welcome p {
+            color: #aebbbb;
+            margin: 0;
+        }
+
+        .status {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 8px 13px;
+            border-radius: 999px;
+            background: rgba(25,135,84,.18);
+            border: 1px solid rgba(25,135,84,.35);
+            color: #9ee6bb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: #0d1b1b;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 18px;
+            padding: 22px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #d4af37;
+        }
+
+        .card p {
+            color: #aebbbb;
+            line-height: 1.55;
+        }
+
+        .profile {
+            margin-top: 25px;
+            background: #0d1b1b;
+            border: 1px solid rgba(212,175,55,.18);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .row:last-child {
+            border-bottom: 0;
+        }
+
+        .label {
+            color: #899b9b;
+        }
+
+        .value {
+            color: #fff;
+            word-break: break-word;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .action {
+            text-decoration: none;
+            color: #071313;
+            background: #d4af37;
+            padding: 12px 17px;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .danger {
+            color: #ffb4bd;
+        }
+
+        #loading {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 20px;
+        }
+
+        #app {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+
+            .header-inner {
+                padding: 13px 15px;
+            }
+
+            main {
+                padding: 20px 15px 45px;
+            }
+
+            .welcome {
+                padding: 22px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .logout {
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="loading">
+    IOIS Dashboard loading...
+</div>
+
+<div id="app">
+
+    <header>
+
+        <div class="header-inner">
+
+            <div class="brand">
+                IOIS
+            </div>
+
+            <button
+                id="logoutButton"
+                class="logout"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="welcome">
+
+            <h1>
+                नमस्ते, <span id="welcomeName">Member</span> 👋
+            </h1>
+
+            <p>
+                आपका IOIS member dashboard यहाँ से manage होगा।
+            </p>
+
+            <span
+                id="accountStatus"
+                class="status"
+            >
+                Account Active
+            </span>
+
+        </section>
+
+        <section class="grid">
+
+            <div class="card">
+                <h3>👤 Profile</h3>
+                <p>
+                    अपनी personal account information देखें और आगे manage करें।
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🧰 Services</h3>
+                <p>
+                    IOIS की digital services यहाँ उपलब्ध होंगी।
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>💳 Membership</h3>
+                <p>
+                    आपका membership structure यहाँ दिखाई देगा।
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>📄 Documents</h3>
+                <p>
+                    Certificates, ID और downloads यहाँ manage होंगे।
+                </p>
+            </div>
+
+        </section>
+
+        <section class="profile">
+
+            <h2>My Profile</h2>
+
+            <div class="row">
+                <div class="label">नाम</div>
+                <div
+                    id="profileName"
+                    class="value"
+                >
+                    —
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">Mobile</div>
+                <div
+                    id="profileMobile"
+                    class="value"
+                >
+                    —
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">Email</div>
+                <div
+                    id="profileEmail"
+                    class="value"
+                >
+                    —
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">Member Since</div>
+                <div
+                    id="profileCreated"
+                    class="value"
+                >
+                    —
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">Account</div>
+                <div
+                    id="profileStatus"
+                    class="value"
+                >
+                    —
+                </div>
+            </div>
+
+            <div class="actions">
+
+                <a
+                    href="index.html"
+                    class="action"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="services.html"
+                    class="action"
+                >
+                    Services
+                </a>
+
+                <a
+                    href="contact.html"
+                    class="action"
+                >
+                    Support
+                </a>
+
+            </div>
+
+
+            <section class="profile" style="margin-top:25px">
+                <h2 style="color:#d4af37;margin-top:0">Membership & Services</h2>
+                <div class="row"><div class="label">Member ID</div><div id="memberId" class="value">—</div></div>
+                <div class="row"><div class="label">Membership Plan</div><div id="memberPlan" class="value">—</div></div>
+                <div class="row"><div class="label">Membership Status</div><div id="memberStatus" class="value">—</div></div>
+                <div class="row"><div class="label">Selected Services</div><div id="memberServices" class="value">—</div></div>
+                <div class="actions">
+                    <a href="payment.html" class="action">💳 Payment</a>
+                    <a href="idcard.html" class="action">🪪 ID Card</a>
+                    <a href="certificate.html" class="action">🏆 Certificate</a>
+                    <a href="downloads.html" class="action">📥 Downloads</a>
+                </div>
+            </section>
+        </section>
+
+    </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="dashboard.js"></script>
+
+<script src="common.js"></script></body>
+</html>
