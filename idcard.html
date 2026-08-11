@@ -614,7 +614,7 @@
                         border-2 border-amber-400">
 
                 <img
-                    src="assets/logo.svg"
+                    src="assets/logo.png"
                     alt="IOIS Logo"
                     class="w-full h-full object-cover"
                     onerror="this.style.display='none'"
@@ -818,7 +818,7 @@
                             <div class="logo-box">
 
                                 <img
-                                    src="assets/logo.svg"
+                                    src="assets/logo.png"
                                     alt="IOIS"
                                     onerror="this.style.display='none'"
                                 >
@@ -1293,11 +1293,11 @@
 
 const IOIS_SUPABASE_URL =
     window.IOIS_SUPABASE_URL ||
-    "YOUR_SUPABASE_URL";
+    "https://hrvwzviprlnpkhrgzdrc.supabase.co";
 
 const IOIS_SUPABASE_ANON_KEY =
     window.IOIS_SUPABASE_ANON_KEY ||
-    "YOUR_SUPABASE_ANON_KEY";
+    "sb_publishable_tXoFuC0rz0JeDOQvmpjz7w_ZAJhKOVF";
 
 
 let supabaseClient = null;
@@ -1310,8 +1310,8 @@ let supabaseClient = null;
 function initializeSupabase() {
 
     if (
-        IOIS_SUPABASE_URL === "YOUR_SUPABASE_URL" ||
-        IOIS_SUPABASE_ANON_KEY === "YOUR_SUPABASE_ANON_KEY"
+        IOIS_SUPABASE_URL === "https://hrvwzviprlnpkhrgzdrc.supabase.co" ||
+        IOIS_SUPABASE_ANON_KEY === "sb_publishable_tXoFuC0rz0JeDOQvmpjz7w_ZAJhKOVF"
     ) {
 
         console.warn(
@@ -2021,5 +2021,5 @@ document.addEventListener(
 
 </script>
 
-<script src="common.js"></script></body>
+</body>
 </html>

@@ -1,182 +1,160 @@
-// =========================================================
-// IOIS - MEMBER DASHBOARD
-// =========================================================
+(() => {
+  "use strict";
 
-document.addEventListener("DOMContentLoaded", async function () {
+  let currentUser = null, currentMember = null, currentRegistry = null;
+  const $ = id => document.getElementById(id);
+  const text = (id, value) => {
+    const el = $(id);
+    if (el) el.textContent = value == null || value === "" ? "—" : String(value);
+  };
+  const withTimeout = (promise, ms, label) => Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error(label)), ms))
+  ]);
 
-    const loading = document.getElementById("loading");
-    const app = document.getElementById("app");
+  function toast(message, type="info") {
+    if (typeof window.showToast === "function") window.showToast(message, type);
+    else console.warn(message);
+  }
 
-    const welcomeName = document.getElementById("welcomeName");
-    const accountStatus = document.getElementById("accountStatus");
-
-    const profileName = document.getElementById("profileName");
-    const profileMobile = document.getElementById("profileMobile");
-    const profileEmail = document.getElementById("profileEmail");
-    const profileCreated = document.getElementById("profileCreated");
-    const profileStatus = document.getElementById("profileStatus");
-    const memberId = document.getElementById("memberId");
-    const memberPlan = document.getElementById("memberPlan");
-    const memberStatus = document.getElementById("memberStatus");
-    const memberServices = document.getElementById("memberServices");
-
-    const logoutButton = document.getElementById("logoutButton");
-
-    function escapeHTML(value) {
-        return String(value ?? "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
-    function formatDate(value) {
-
-        if (!value) {
-            return "—";
-        }
-
-        try {
-
-            return new Intl.DateTimeFormat(
-                "hi-IN",
-                {
-                    dateStyle: "medium"
-                }
-            ).format(new Date(value));
-
-        } catch {
-            return value;
-        }
-    }
-
-    function redirectToLogin() {
-        window.location.replace("login.html");
-    }
-
-    try {
-
-        const authResult = await window.IOIS_AUTH.getUser();
-
-        if (!authResult.user) {
-            redirectToLogin();
-            return;
-        }
-
-        const user = authResult.user;
-
-        const profileResult =
-            await window.IOIS_AUTH.getProfile(user.id);
-
-        if (profileResult.error) {
-
-            console.error(
-                "Profile loading error:",
-                profileResult.error
-            );
-
-            // Dashboard can still open using Auth user information.
-        }
-
-        const profile = profileResult.profile || {};
-        const { data: member } = await window.IOIS_SUPABASE
-            .from("members")
-            .select("member_id,plan_id,plan_amount,membership_status,selected_services")
-            .eq("auth_user_id", user.id)
-            .maybeSingle();
-
-        const name =
-            profile.full_name ||
-            user.user_metadata?.full_name ||
-            "IOIS Member";
-
-        const mobile =
-            profile.mobile ||
-            user.user_metadata?.mobile ||
-            "—";
-
-        const email =
-            profile.email ||
-            user.email ||
-            "—";
-
-        const status =
-            profile.account_status ||
-            "active";
-
-        welcomeName.textContent = name;
-
-        profileName.textContent = name;
-        profileMobile.textContent = mobile;
-        profileEmail.textContent = email;
-
-        profileCreated.textContent =
-            formatDate(
-                profile.created_at ||
-                user.created_at
-            );
-
-        profileStatus.textContent =
-            status === "active"
-                ? "Active"
-                : status;
-
-        accountStatus.textContent =
-            status === "active"
-                ? "Account Active"
-                : "Account " + status;
-
-        if (member) {
-            memberId.textContent = member.member_id || "—";
-            memberPlan.textContent = member.plan_id ? `${member.plan_id} — ₹${Number(member.plan_amount || 0).toLocaleString("en-IN")}` : "—";
-            memberStatus.textContent = member.membership_status || "pending";
-            const services = Array.isArray(member.selected_services) ? member.selected_services : [];
-            memberServices.textContent = services.length ? services.join(" • ") : "कोई service selected नहीं";
-        }
-
-        loading.style.display = "none";
-        app.style.display = "block";
-
-    } catch (error) {
-
-        console.error(
-            "IOIS Dashboard Error:",
-            error
-        );
-
-        redirectToLogin();
-    }
-
-    logoutButton.addEventListener("click", async function () {
-
-        logoutButton.disabled = true;
-        logoutButton.textContent = "Logout हो रहा है...";
-
-        try {
-
-            const result =
-                await window.IOIS_AUTH.signOut();
-
-            if (!result.success) {
-                console.error(result.error);
-                logoutButton.disabled = false;
-                logoutButton.textContent = "Logout";
-                return;
-            }
-
-            window.location.replace("login.html");
-
-        } catch (error) {
-
-            console.error(
-                "IOIS Logout Error:",
-                error
-            );
-
-            logoutButton.disabled = false;
-            logoutButton.textContent = "Logout";
-        }
+  function formatDate(v) {
+    if (!v) return "—";
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? String(v) : d.toLocaleDateString("hi-IN", {
+      day:"2-digit", month:"short", year:"numeric"
     });
+  }
 
-});
+  async function init() {
+    try {
+      const auth = window.IOISAuth;
+      if (!auth) throw new Error("AUTH_NOT_READY");
+
+      const session = await withTimeout(auth.getSession(), 10000, "SESSION_TIMEOUT");
+      if (!session?.user) {
+        location.replace("login.html?redirect=dashboard.html");
+        return;
+      }
+      currentUser = session.user;
+
+      const client = auth.getClient();
+      if (!client) throw new Error("SUPABASE_NOT_READY");
+
+      // Query both existing IOIS sources independently. A missing/blocked
+      // members row must not prevent the registry row from loading.
+      const [membersResult, registryResult] = await Promise.allSettled([
+        withTimeout(
+          client.from("members").select("*").eq("auth_user_id", currentUser.id).maybeSingle(),
+          8000, "MEMBER_QUERY_TIMEOUT"
+        ),
+        withTimeout(
+          client.from("iois_member_registry").select("*").eq("user_id", currentUser.id).maybeSingle(),
+          8000, "REGISTRY_QUERY_TIMEOUT"
+        )
+      ]);
+
+      currentMember =
+        membersResult.status === "fulfilled" && !membersResult.value.error
+          ? membersResult.value.data
+          : null;
+
+      currentRegistry =
+        registryResult.status === "fulfilled" && !registryResult.value.error
+          ? registryResult.value.data
+          : null;
+
+      // Some older registrations have the registry row but the members row
+      // is incomplete. Registry is therefore a valid source, not an error.
+      if (!currentMember && !currentRegistry) {
+        console.error("IOIS member sources:", membersResult, registryResult);
+        throw new Error("MEMBER_NOT_FOUND");
+      }
+
+      const m = currentMember || {};
+      const r = currentRegistry || {};
+      const u = currentUser.user_metadata || {};
+
+      const name =
+        m.full_name || r.full_name || u.full_name || "IOIS Member";
+      const email =
+        m.email || r.email || currentUser.email || "";
+      const phone =
+        m.mobile || r.phone || u.phone || "";
+      const id =
+        m.iois_user_id || r.member_id || "Pending";
+      const plan =
+        m.selected_plan || r.plan_name || r.plan_code || "—";
+      const amount =
+        m.plan_amount ?? r.plan_amount ?? null;
+      const status =
+        m.status || "pending";
+      const sponsor =
+        m.sponsor_id || r.sponsor_id || "—";
+      const address =
+        m.address || r.address || "";
+      const withdrawal =
+        r.withdrawal_details || "";
+      const joined =
+        m.created_at || r.created_at || null;
+
+      [
+        ["dashboard-name", name],
+        ["profile-name", name],
+        ["profile-email", email],
+        ["profile-phone", phone],
+        ["profile-address", address],
+        ["profile-sponsor-id", sponsor],
+        ["profile-sponsor-name", r.sponsor_name || "—"],
+        ["user-id", id],
+        ["dashboard-user-id", id],
+        ["member-id", id],
+        ["membership-plan", plan],
+        ["plan-name", plan],
+        ["plan-amount", amount == null ? "—" : `₹${amount}`],
+        ["member-status", status],
+        ["registration-date", formatDate(joined)],
+        ["withdrawal-upi", withdrawal || "—"],
+        ["withdrawal-details", withdrawal || "—"]
+      ].forEach(([k,v]) => text(k,v));
+
+      document.querySelectorAll("[data-member-id]").forEach(el => el.textContent = id);
+      document.querySelectorAll("[data-member-name]").forEach(el => el.textContent = name);
+      document.querySelectorAll("[data-status]").forEach(el => el.textContent = status);
+
+      // Referral link: keep it deterministic and client-side.
+      const referral = id && id !== "Pending"
+        ? `${location.origin}${location.pathname.replace(/[^/]*$/, "")}register.html?ref=${encodeURIComponent(id)}`
+        : "";
+      document.querySelectorAll("[data-referral-link]").forEach(el => el.textContent = referral || "—");
+      const referralInput = $("referral-link");
+      if (referralInput) referralInput.value = referral;
+
+      $("dashboard-loading")?.classList.add("hidden");
+      $("dashboard-content")?.classList.remove("hidden");
+
+    } catch (e) {
+      console.error("IOIS dashboard:", e);
+      $("dashboard-loading")?.classList.add("hidden");
+      $("dashboard-content")?.classList.remove("hidden");
+
+      const message =
+        e.message === "MEMBER_NOT_FOUND"
+          ? "आपका Member record अभी उपलब्ध नहीं है। कृपया registration पूरा होने की पुष्टि करें।"
+          : e.message === "SESSION_TIMEOUT"
+          ? "Session check में समय लग रहा है। कृपया page refresh करें।"
+          : "Member data load नहीं हो पाया।";
+
+      toast(message, "error");
+    }
+  }
+
+  window.handleIOISLogout = async () => {
+    try {
+      await window.IOISAuth?.getClient()?.auth.signOut();
+    } finally {
+      location.replace("login.html");
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", init);
+})();

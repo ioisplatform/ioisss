@@ -98,13 +98,10 @@ function scrollToPlans(){ $("plans")?.scrollIntoView({behavior:"smooth"}); }
 function openVideo(){window.open("https://www.youtube.com/watch?v=0gYd3mIxksc","_blank","noopener");}
 function openRegistrationFlow(){openRegistrationFlowWithTier("starter");}
 function openRegistrationFlowWithTier(tier){
-  const overlay=$("modal-overlay"); $("registration-modal").classList.add("active"); $("login-modal").classList.remove("active"); overlay.classList.add("active");
-  if($("reg-plan")) $("reg-plan").value=tier;
-  document.body.classList.add("modal-open");
+  const safeTier=encodeURIComponent(tier||"starter");
+  window.location.href=`register.html?plan=${safeTier}`;
 }
-function openLoginModal(){
-  $("login-modal").classList.add("active"); $("registration-modal").classList.remove("active"); $("modal-overlay").classList.add("active"); document.body.classList.add("modal-open");
-}
+function openLoginModal(){ window.location.href="login.html"; }
 function closeModals(e){
   if(e && e.target!==$("modal-overlay"))return;
   $("modal-overlay").classList.remove("active"); $("registration-modal").classList.remove("active"); $("login-modal").classList.remove("active"); document.body.classList.remove("modal-open");
@@ -113,15 +110,14 @@ function handleDetailsSubmit(e){
   e.preventDefault();
   const name=$("reg-name").value.trim(), phone=$("reg-phone").value.replace(/\D/g,""), ref=$("reg-ref").value.trim(), id=$("reg-plan").value;
   if(!/^[6-9]\d{9}$/.test(phone)){showToast("कृपया सही 10-digit Indian mobile number डालें","error");return;}
-  localStorage.setItem("iois_prefill",JSON.stringify({name,phone,ref}));
-  closeModals();
-  showToast("Secure registration page खोला जा रहा है…","success");
-  setTimeout(()=>{location.href=`register.html?plan=${encodeURIComponent(id)}`},250);
+  const plan=IOIS_CONFIG.plans.find(x=>x.id===id);
+  const record={name,phone,ref,plan:plan?.name||id,price:plan?.price||0,createdAt:new Date().toISOString()};
+  const list=JSON.parse(localStorage.getItem("iois_leads")||"[]"); list.push(record); localStorage.setItem("iois_leads",JSON.stringify(list));
+  closeModals(); showToast(`Registration saved — ${plan.name} (${money(plan.price)})`,"success");
+  setTimeout(()=>alert(`IOIS Registration\\n\\nName: ${name}\\nPlan: ${plan.name}\\nAmount: ${money(plan.price)}\\n\\nNext step: official payment/verification process.`),250);
 }
 function handleLogin(e){
-  e.preventDefault();
-  closeModals();
-  location.href="login.html";
+  e.preventDefault(); showToast("Frontend login form ready. Supabase Auth connect होने पर real login होगा.","success"); closeModals();
 }
 document.addEventListener("DOMContentLoaded",()=>{renderPlans();renderExamples();updateClock();setInterval(updateClock,1000);loadWeather();});
 window.openRegistrationFlow=openRegistrationFlow; window.openRegistrationFlowWithTier=openRegistrationFlowWithTier; window.openLoginModal=openLoginModal; window.closeModals=closeModals; window.toggleMobileMenu=toggleMobileMenu; window.scrollToPlans=scrollToPlans; window.handleDetailsSubmit=handleDetailsSubmit; window.handleLogin=handleLogin; window.openVideo=openVideo;
