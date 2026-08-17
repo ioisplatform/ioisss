@@ -3,408 +3,404 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#030712">
 <title>IOIS PLATFORM | Indian Online Income Supporting System</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap');
-
   :root {
-    --primary-dark: #020617;
-    --gold: #D4AF37;
+    --bg-dark: #020617;
+    --card-bg: rgba(15, 23, 42, 0.75);
     --saffron: #FF9933;
     --green: #138808;
-    --glass: rgba(15, 23, 42, 0.8);
+    --gold: #D4AF37;
+    --gold-light: #F3E5AB;
+    --border-glow: rgba(212, 175, 55, 0.4);
   }
 
   body {
-    background-color: var(--primary-dark);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-    background-image: radial-gradient(circle at 50% -20%, #1e293b, transparent);
+    background-color: var(--bg-dark);
+    color: #f8fafc;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(255, 153, 51, 0.15), transparent 40%),
+      radial-gradient(circle at 100% 100%, rgba(19, 136, 8, 0.1), transparent 40%),
+      linear-gradient(to right, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
   }
 
-  /* Premium Glow Text */
-  .gold-glow {
-    background: linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7);
+  /* Ultra Premium Metallic Text Styling */
+  .gold-metallic-text {
+    background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+    font-weight: 900;
   }
 
-  /* 3D Plan Card */
-  .plan-3d-card {
-    perspective: 1000px;
-    transition: transform 0.5s;
+  .tiranga-text {
+    background: linear-gradient(90deg, var(--saffron) 0%, #FFFFFF 50%, var(--green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.8));
   }
-  .plan-inner {
-    background: var(--glass);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 24px;
-    padding: 2rem;
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    cursor: pointer;
+
+  /* Premium Card & 3D Image */
+  .glass-card-premium {
+    background: var(--card-bg);
+    border: 1px solid var(--border-glow);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
   }
-  .plan-inner:hover {
-    transform: rotateY(10deg) translateY(-10px);
+  .glass-card-premium:hover {
     border-color: var(--gold);
-    box-shadow: 0 30px 60px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 15px 40px -5px rgba(212, 175, 55, 0.25);
+    transform: translateY(-5px);
   }
 
-  /* Join Button - Super Premium */
-  .btn-join-premium {
-    background: linear-gradient(90deg, var(--saffron), #fff, var(--green));
-    background-size: 200% auto;
+  .plan-image-3d {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  }
+
+  /* Ultra 3D Buttons */
+  .btn-reg-premium {
+    background: linear-gradient(135deg, #FF9933 0%, #D4AF37 50%, #138808 100%);
     color: #000;
     font-weight: 900;
+    padding: 14px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(255, 153, 51, 0.4);
+    transition: all 0.3s ease;
     text-transform: uppercase;
-    animation: shine 3s linear infinite;
-    box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
-    border: none;
-    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
-  @keyframes shine { to { background-position: 200% center; } }
-  .btn-join-premium:hover { transform: scale(1.05); box-shadow: 0 0 30px var(--gold); }
+  .btn-reg-premium:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+  }
 
-  /* 12-Digit Clock Styling */
-  .clock-wrap {
-    width: 160px; height: 160px;
-    border: 6px solid var(--gold);
+  /* Analog Clock 12-Digit */
+  .analog-clock {
+    width: 140px; height: 140px;
+    border: 4px solid var(--gold);
     border-radius: 50%;
     position: relative;
-    background: #000;
-    box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.5), 0 0 30px rgba(0,0,0,0.8);
+    background: radial-gradient(circle, #0f172a 0%, #030712 100%);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
   }
   .digit {
-    position: absolute; width: 100%; height: 100%; text-align: center;
-    font-weight: 900; color: var(--gold); font-size: 14px; padding: 5px;
+    position: absolute; width: 100%; height: 100%;
+    text-align: center; font-size: 12px; font-weight: 900; color: var(--gold-light);
+    padding: 5px;
   }
-  .d1 { transform: rotate(30deg); } .d2 { transform: rotate(60deg); }
-  .d3 { transform: rotate(90deg); } .d4 { transform: rotate(120deg); }
-  .d5 { transform: rotate(150deg); } .d6 { transform: rotate(180deg); }
-  .d7 { transform: rotate(210deg); } .d8 { transform: rotate(240deg); }
-  .d9 { transform: rotate(270deg); } .d10 { transform: rotate(300deg); }
-  .d11 { transform: rotate(330deg); } .d12 { transform: rotate(0deg); }
+  .d12 { transform: rotate(0deg); } .d1 { transform: rotate(30deg); } .d2 { transform: rotate(60deg); }
+  .d3 { transform: rotate(90deg); } .d4 { transform: rotate(120deg); } .d5 { transform: rotate(150deg); }
+  .d6 { transform: rotate(180deg); } .d7 { transform: rotate(210deg); } .d8 { transform: rotate(240deg); }
+  .d9 { transform: rotate(270deg); } .d10 { transform: rotate(300deg); } .d11 { transform: rotate(330deg); }
 
-  .hand {
-    position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 5px;
-  }
-  .h-hour { width: 5px; height: 40px; background: #fff; }
-  .h-min { width: 3px; height: 60px; background: var(--gold); }
-  .h-sec { width: 1.5px; height: 65px; background: var(--saffron); }
+  .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 4px; }
+  .hour-hand { width: 5px; height: 35px; background: var(--gold); }
+  .min-hand { width: 3px; height: 50px; background: #fff; }
+  .sec-hand { width: 1.5px; height: 55px; background: var(--saffron); }
 
-  /* Plan Photo Container */
-  .plan-img-container {
-    width: 100%;
-    height: 220px;
-    overflow: hidden;
-    border-radius: 15px;
-    margin-bottom: 1.5rem;
-    position: relative;
-    background: #000;
-  }
-  .plan-img-container img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: 0.5s;
-  }
-  .plan-inner:hover img { transform: scale(1.1); }
+  .hidden-section { display: none; animation: slideDown 0.5s forwards; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* Ticker */
-  .live-ticker {
-    background: rgba(0,0,0,0.8);
-    border-bottom: 1px solid var(--gold);
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 10px 0;
-  }
-  .ticker-move {
-    display: inline-block;
-    animation: ticker 25s linear infinite;
-  }
+  .ticker { white-space: nowrap; animation: ticker 25s linear infinite; }
   @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
 </style>
 </head>
-<body>
+<body class="antialiased">
 
 <!-- LIVE UPDATES TICKER -->
-<div class="live-ticker text-xs font-bold uppercase tracking-widest">
-  <div class="ticker-move">
-    <span class="mx-10 text-saffron">🔥 New: Bal Vikas Access Plan Launched at ₹10!</span>
-    <span class="mx-10 text-white">💎 Get 70% Instant Referral Commission on Tiers 1-2.</span>
-    <span class="mx-10 text-green-500">🚀 Official Telegram Bot @helpiois_bot is now active 24/7.</span>
-    <span class="mx-10 text-amber-400">🛡️ Parents Safety Console Updated with Daily Panchang.</span>
+<div class="bg-slate-950 border-b border-amber-500/30 py-2 overflow-hidden">
+  <div class="ticker flex gap-10 text-[10px] font-bold uppercase tracking-widest text-slate-300">
+    <span>🔥 IOIS प्लेटफार्म: ₹10 से ₹999 तक के 7 मास्टर प्लांस लाइव हो चुके हैं!</span>
+    <span class="text-amber-400">💎 रेफरल अर्निंग 70% तक—सीधे आपके वॉलेट में।</span>
+    <span class="text-green-400">✅ @helpiois_bot और @ioishelp_bot अब पूरी तरह एक्टिव हैं।</span>
+    <span>🚀 पेरेंट्स कॉर्नर में आज का पंचांग और पालन-पोषण टिप्स अपडेट कर दिए गए हैं।</span>
   </div>
 </div>
 
-<!-- NAVIGATION -->
-<header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-amber-500/20 py-4">
-  <div class="container mx-auto px-6 flex justify-between items-center">
-    <!-- LOGO ASSET AREA -->
-    <div class="flex items-center gap-3">
-      <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center overflow-hidden border-2 border-gold shadow-lg">
-        <!-- Replace 'logo.png' with your actual logo link -->
-        <img src="https://via.placeholder.com/100" alt="IOIS LOGO" class="w-full h-full object-contain">
+<header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-amber-500/20 py-4 px-6">
+  <div class="container mx-auto flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3">
+      <!-- LOGO PNG PLACEHOLDER -->
+      <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1 border-2 border-gold shadow-lg">
+        <img src="https://via.placeholder.com/100?text=IOIS" alt="Logo" class="w-full h-full object-contain">
       </div>
       <div>
-        <h1 class="text-xl md:text-2xl font-black gold-glow leading-none">IOIS PLATFORM</h1>
-        <p class="text-[8px] tracking-[4px] uppercase font-bold text-slate-400">Supporting Success</p>
+        <b class="tiranga-text text-2xl block leading-none">IOIS PLATFORM</b>
+        <small class="text-[9px] gold-metallic-text tracking-widest font-bold uppercase block mt-1">Indian Online Income Supporting System</small>
       </div>
-    </div>
-    
-    <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-widest text-slate-300">
-      <a href="#plans" class="hover:text-gold transition">Plans</a>
-      <a href="#referral" class="hover:text-gold transition">Referral</a>
-      <a href="#contact" class="hover:text-gold transition">Help Desk</a>
-    </div>
-
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium px-6 py-2 rounded-full text-[10px]">
-      Register Now
     </a>
+    <div class="hidden lg:flex gap-6 text-[10px] font-black uppercase tracking-wider text-slate-300">
+      <a href="#plans" class="hover:text-amber-400 transition">7 Master Plans</a>
+      <a href="#selection" class="hover:text-amber-400 transition">Smart Selection</a>
+      <a href="#contact" class="hover:text-amber-400 transition">Help Desk</a>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium text-[10px]">Register Now</a>
   </div>
 </header>
 
-<main class="container mx-auto px-6 py-16 space-y-24">
+<main class="container mx-auto px-4 py-12 space-y-20">
 
-  <!-- HERO SECTION -->
-  <section class="text-center space-y-8">
-    <h2 class="text-5xl md:text-8xl font-black leading-tight">
-      Empower Your <br> <span class="gold-glow">Digital Future</span>
-    </h2>
-    <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
-      भारत का विश्वसनीय डिजिटल सिस्टम—शिक्षा और आय का बेजोड़ संगम। 
-      आज ही अपना मास्टर प्लान चुनें और 70% तक रेफरल आय शुरू करें।
-    </p>
-    <div class="flex justify-center gap-4">
-      <div class="clock-wrap">
-        <div class="digit d12">12</div><div class="digit d1">1</div><div class="digit d2">2</div>
-        <div class="digit d3">3</div><div class="digit d4">4</div><div class="digit d5">5</div>
-        <div class="digit d6">6</div><div class="digit d7">7</div><div class="digit d8">8</div>
-        <div class="digit d9">9</div><div class="digit d10">10</div><div class="digit d11">11</div>
-        <div id="h-hour" class="hand h-hour"></div>
-        <div id="h-min" class="hand h-min"></div>
-        <div id="h-sec" class="hand h-sec"></div>
-        <div class="absolute w-3 h-3 bg-white rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-gold"></div>
+  <!-- HERO & LIVE WIDGETS -->
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+    <div class="lg:col-span-2 space-y-6 text-center lg:text-left">
+      <span class="inline-block bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] px-4 py-1.5 rounded-full uppercase font-bold tracking-widest">🇮🇳 National Digital Infrastructure</span>
+      <h1 class="tiranga-text text-5xl md:text-7xl font-black leading-tight">
+        भविष्य को दें <br><span class="gold-metallic-text">डिजिटल रफ़्तार</span>
+      </h1>
+      <p class="text-slate-400 max-w-xl text-sm md:text-base leading-relaxed">
+        IOIS प्लेटफार्म विद्यार्थियों, जॉब सीकर्स और पेरेंट्स के लिए डिज़ाइन किया गया भारत का सबसे सुरक्षित डिजिटल इकोसिस्टम है।
+      </p>
+      <div class="flex flex-wrap gap-4 justify-center lg:justify-start">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium text-xs">
+          <i class="fa-solid fa-rocket"></i> अभी रजिस्ट्रेशन करें
+        </a>
+      </div>
+    </div>
+
+    <!-- LIVE CLOCK & PANCHANG -->
+    <div class="glass-card-premium p-8 flex flex-col items-center gap-6">
+      <h3 class="gold-metallic-text font-black text-sm uppercase">IOIS Live Time</h3>
+      <div class="analog-clock">
+        <div class="digit d12">12</div><div class="digit d3">3</div><div class="digit d6">6</div><div class="digit d9">9</div>
+        <div id="hour-hand" class="hand hour-hand"></div>
+        <div id="min-hand" class="hand min-hand"></div>
+        <div id="sec-hand" class="hand sec-hand"></div>
+        <div class="absolute w-3 h-3 bg-amber-400 rounded-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+      </div>
+      <div class="w-full space-y-3 text-[10px] font-bold border-t border-slate-800 pt-4">
+        <div class="flex justify-between text-slate-400 uppercase"><span>आज का शुभ रंग:</span><span class="text-amber-400">पीला / केसरिया</span></div>
+        <div class="flex justify-between text-slate-400 uppercase"><span>Weather (Delhi):</span><span class="text-emerald-400">28°C Clear</span></div>
+        <div class="flex justify-between text-slate-400 uppercase"><span>Panchang:</span><span class="text-white">शुक्ल पक्ष, एकादशी</span></div>
       </div>
     </div>
   </section>
 
-  <!-- DYNAMIC 7 MASTER PLANS -->
-  <section id="plans" class="space-y-12">
-    <div class="text-center">
-      <h3 class="text-3xl font-black uppercase tracking-tighter gold-glow">IOIS 7 Dynamic Master Plans</h3>
-      <p class="text-slate-500 text-xs">सही निवेश, बेहतर भविष्य</p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      
-      <!-- Plan 1 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <!-- Bal Vikas Access Photo -->
-            <img src="https://img.freepik.com/free-photo/kids-studying-from-home-together_23-2148851056.jpg" alt="Plan 1">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 01</span>
-            <h4 class="text-xl font-black text-white">Bal Vikas Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹10</div>
-            <p class="text-[10px] text-slate-400 mb-4">Class 1-5 NCERT PDFs & Worksheets</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹7 (70%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 2 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <img src="https://img.freepik.com/free-vector/job-search-illustration_23-2148600010.jpg" alt="Plan 2">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 02</span>
-            <h4 class="text-xl font-black text-white">Youth Skill Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹49</div>
-            <p class="text-[10px] text-slate-400 mb-4">Resume Templates & AI Tools Guide</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹34 (70%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 3 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <img src="https://img.freepik.com/free-photo/graduation-cap-diploma_23-2148851034.jpg" alt="Plan 3">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 03</span>
-            <h4 class="text-xl font-black text-white">Career & Job Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹99</div>
-            <p class="text-[10px] text-slate-400 mb-4">Class 6-12 NCERT & Career Guide</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹64 (65%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 4 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <img src="https://img.freepik.com/free-photo/happy-family-spending-time-together_23-2148851025.jpg" alt="Plan 4">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 04</span>
-            <h4 class="text-xl font-black text-white">Family VIP Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹199</div>
-            <p class="text-[10px] text-slate-400 mb-4">Parents Corner & Study Material</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹119 (60%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 5 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <img src="https://img.freepik.com/free-photo/student-studying-with-laptop_23-2148851012.jpg" alt="Plan 5">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 05</span>
-            <h4 class="text-xl font-black text-white">Student & Exam Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹299</div>
-            <p class="text-[10px] text-slate-400 mb-4">Exam Notes & All Study Material</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹179 (60%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 6 -->
-      <div class="plan-3d-card">
-        <div class="plan-inner h-full flex flex-col">
-          <div class="plan-img-container">
-            <img src="https://img.freepik.com/free-photo/businesspeople-working-together_23-2148851015.jpg" alt="Plan 6">
-          </div>
-          <div class="flex-grow">
-            <span class="text-[10px] font-bold text-saffron uppercase">Tier 06</span>
-            <h4 class="text-xl font-black text-white">Agency Reseller Access</h4>
-            <div class="text-3xl font-black text-gold my-2">₹499</div>
-            <p class="text-[10px] text-slate-400 mb-4">All Resources + Reselling Rights</p>
-            <div class="bg-green-500/10 p-3 rounded-xl border border-green-500/20 mb-6">
-              <p class="text-[10px] font-bold text-green-400">Referral Earning: ₹274 (55%)</p>
-            </div>
-          </div>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium w-full py-3 rounded-xl text-xs text-center">Join Plan Now</a>
-        </div>
-      </div>
-
-      <!-- Plan 7 - ULTIMATE MASTER -->
-      <div class="plan-3d-card lg:col-span-3">
-        <div class="plan-inner bg-gradient-to-br from-slate-900 to-black border-2 border-gold p-10 flex flex-col md:flex-row gap-10 items-center">
-          <div class="md:w-1/2">
-            <img src="https://img.freepik.com/free-photo/golden-crown-with-diamonds_23-2148851018.jpg" alt="Master Plan" class="rounded-3xl shadow-2xl">
-          </div>
-          <div class="md:w-1/2 space-y-4">
-            <span class="bg-gold/10 text-gold px-4 py-1 rounded-full text-[10px] font-bold uppercase">LIFETIME ACCESS</span>
-            <h4 class="text-4xl font-black gold-glow uppercase">Lifetime Master Access</h4>
-            <div class="text-5xl font-black text-white">₹999</div>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              IOIS प्लेटफार्म का सबसे शक्तिशाली प्लान। इसमें आपको सम्पूर्ण मास्टर ड्राइव एक्सेस, पर्सनल मेंटरशिप और भविष्य के सभी अपडेट्स फ्री मिलते हैं।
-            </p>
-            <div class="bg-gold/10 p-4 rounded-2xl border border-gold/20">
-              <p class="text-sm font-bold text-gold">Referral Earning: ₹499 (50% Instant)</p>
-            </div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" class="btn-join-premium block w-full py-4 rounded-2xl text-center text-sm">Unlock Ultimate Drive Access</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- WEATHER & PANCHANG WIDGET -->
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div class="plan-inner p-10">
-      <h4 class="gold-glow font-black text-xl mb-4 uppercase">Live Panchang & Weather</h4>
-      <div class="space-y-4 text-xs font-bold">
-        <div class="flex justify-between border-b border-white/10 pb-2">
-          <span class="text-slate-400 uppercase">आज की तिथि:</span>
-          <span class="text-saffron">शुक्ल पक्ष, एकादशी</span>
-        </div>
-        <div class="flex justify-between border-b border-white/10 pb-2">
-          <span class="text-slate-400 uppercase">शुभ मुहूर्त:</span>
-          <span class="text-green-500">11:45 AM - 12:35 PM</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-slate-400 uppercase">Weather Update:</span>
-          <span class="text-white">28°C, Clear Sky</span>
-        </div>
-      </div>
+  <!-- SMART SELECTION SURVEY -->
+  <section id="selection" class="glass-card-premium p-10 border-l-4 border-l-amber-500">
+    <div class="text-center mb-10">
+      <h2 class="gold-metallic-text text-3xl font-black mb-2 uppercase">आप किस उद्देश्य से आए हैं?</h2>
+      <p class="text-slate-400 text-xs">अपनी श्रेणी चुनें—सिस्टम आपको वही दिखाएगा जो आपके काम का है।</p>
     </div>
     
-    <div class="plan-inner p-10 flex items-center gap-6">
-      <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-3xl text-green-500">
-        <i class="fa-brands fa-whatsapp"></i>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <button onclick="toggleService('parent')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500 transition-all text-left">
+        <i class="fa-solid fa-shield-heart text-2xl text-amber-500 mb-4 block"></i>
+        <h4 class="text-white font-bold mb-1">मैं एक Parent हूँ</h4>
+        <p class="text-[10px] text-slate-500 leading-relaxed">बच्चों के लिए स्टडी मटेरियल, पंचांग और ट्रांसपेरेंसी पोर्टल एक्सेस करने के लिए।</p>
+      </button>
+
+      <button onclick="toggleService('student')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500 transition-all text-left">
+        <i class="fa-solid fa-user-graduate text-2xl text-emerald-500 mb-4 block"></i>
+        <h4 class="text-white font-bold mb-1">मैं एक Student हूँ</h4>
+        <p class="text-[10px] text-slate-500 leading-relaxed">NCERT नोट्स, AI टूल्स, Resume गाइड्स और पार्ट-टाइम आय के लिए।</p>
+      </button>
+
+      <button onclick="toggleService('creator')" class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500 transition-all text-left">
+        <i class="fa-solid fa-briefcase text-2xl text-sky-500 mb-4 block"></i>
+        <h4 class="text-white font-bold mb-1">मैं Business Promoter हूँ</h4>
+        <p class="text-[10px] text-slate-500 leading-relaxed">एजेंसी रिसेलर राइट्स, ऑटोमेशन टूल्स और मास्टर ड्राइव एक्सेस के लिए।</p>
+      </button>
+    </div>
+
+    <!-- Hidden Result Area -->
+    <div id="parent-result" class="hidden-section mt-10 p-8 rounded-2xl bg-amber-500/5 border border-amber-500/20">
+      <h3 class="text-amber-400 font-black mb-4 flex items-center gap-3"><i class="fa-solid fa-circle-check"></i> Parent's Special Resources</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-[11px] text-slate-300">
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ पंचांग टिप्स</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ सुरक्षित अर्निंग</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ लाइव सपोर्ट</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ पारदर्शी रिपोर्ट्स</div>
       </div>
-      <div>
-        <h4 class="text-white font-black text-lg">Help Line (WhatsApp)</h4>
-        <p class="text-sm font-mono text-slate-400">+91 8877490845</p>
-        <p class="text-[10px] text-slate-500">24/7 Dedicated Support</p>
+    </div>
+    <div id="student-result" class="hidden-section mt-10 p-8 rounded-2xl bg-emerald-500/5 border border-emerald-500/20">
+      <h3 class="text-emerald-400 font-black mb-4 flex items-center gap-3"><i class="fa-solid fa-circle-check"></i> Student & Career Tools</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-[11px] text-slate-300">
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ Resume Templates</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ AI गाइडबुक</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ NCERT नोट्स</div>
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">✅ डिजिटल स्किल्स</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 MASTER PLANS -->
+  <section id="plans" class="space-y-12">
+    <div class="text-center">
+      <h2 class="gold-metallic-text text-4xl font-black uppercase">IOIS 7 Dynamic Master Plans</h2>
+      <p class="text-slate-500 text-xs mt-2">हर वर्ग के लिए सही डिजिटल सर्विस और अर्निंग सिस्टम</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      
+      <!-- PLAN 1 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-amber-500">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=400" alt="Bal Vikas" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-amber-500 uppercase">1st Plan - Bal Vikas Access</span>
+          <h4 class="text-lg font-bold text-white">Class 1-5 NCERT PDFs</h4>
+          <div class="text-3xl font-black text-amber-400">₹10</div>
+          <div class="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+            <p class="text-[10px] font-bold text-amber-300">रेफरल आय: ₹7 (70% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹10</a>
+      </div>
+
+      <!-- PLAN 2 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-amber-500">
+        <img src="https://images.unsplash.com/photo-1454165833767-02a6ed8a687a?auto=format&fit=crop&q=80&w=400" alt="Youth Skill" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-amber-500 uppercase">2nd Plan - Youth Skill Access</span>
+          <h4 class="text-lg font-bold text-white">Resume & AI Tools Guide</h4>
+          <div class="text-3xl font-black text-amber-400">₹49</div>
+          <div class="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+            <p class="text-[10px] font-bold text-amber-300">रेफरल आय: ₹34 (70% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹49</a>
+      </div>
+
+      <!-- PLAN 3 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-amber-500">
+        <img src="https://images.unsplash.com/photo-1523050335456-c4b31c633a28?auto=format&fit=crop&q=80&w=400" alt="Career Job" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-amber-500 uppercase">3rd Plan - Career & Job Access</span>
+          <h4 class="text-lg font-bold text-white">Class 6-12 NCERT Material</h4>
+          <div class="text-3xl font-black text-amber-400">₹99</div>
+          <div class="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+            <p class="text-[10px] font-bold text-amber-300">रेफरल आय: ₹64 (65% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹99</a>
+      </div>
+
+      <!-- PLAN 4 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-emerald-500">
+        <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?auto=format&fit=crop&q=80&w=400" alt="Family VIP" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-emerald-500 uppercase">4th Plan - Family VIP Access</span>
+          <h4 class="text-lg font-bold text-white">Parents Corner & Panchang</h4>
+          <div class="text-3xl font-black text-emerald-400">₹199</div>
+          <div class="bg-emerald-500/10 p-3 rounded-lg border border-emerald-500/20">
+            <p class="text-[10px] font-bold text-emerald-300">रेफरल आय: ₹119 (60% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹199</a>
+      </div>
+
+      <!-- PLAN 5 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-amber-500">
+        <img src="https://images.unsplash.com/photo-1513258496099-48168024adb0?auto=format&fit=crop&q=80&w=400" alt="Student Exam" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-amber-500 uppercase">5th Plan - Student & Exam Access</span>
+          <h4 class="text-lg font-bold text-white">Competitive Exam Notes</h4>
+          <div class="text-3xl font-black text-amber-400">₹299</div>
+          <div class="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+            <p class="text-[10px] font-bold text-amber-300">रेफरल आय: ₹179 (60% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹299</a>
+      </div>
+
+      <!-- PLAN 6 -->
+      <div class="glass-card-premium p-5 border-t-4 border-t-amber-500">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400" alt="Agency Reseller" class="plan-image-3d mb-4">
+        <div class="flex-grow space-y-2">
+          <span class="text-[9px] font-black text-amber-500 uppercase">6th Plan - Agency Reseller</span>
+          <h4 class="text-lg font-bold text-white">Reselling Rights & Full Access</h4>
+          <div class="text-3xl font-black text-amber-400">₹499</div>
+          <div class="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+            <p class="text-[10px] font-bold text-amber-300">रेफरल आय: ₹274 (55% Instant)</p>
+          </div>
+        </div>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full mt-4 text-[10px] py-3">Register @ ₹499</a>
+      </div>
+
+      <!-- PLAN 7 - ULTIMATE -->
+      <div class="glass-card-premium p-5 border-2 border-amber-400 bg-gradient-to-br from-slate-900 to-amber-950/20 lg:col-span-2 flex flex-col md:flex-row gap-6 items-center">
+        <img src="https://images.unsplash.com/photo-1589492477829-5e65395b66cc?auto=format&fit=crop&q=80&w=400" alt="Lifetime Master" class="md:w-1/2 plan-image-3d h-full">
+        <div class="md:w-1/2 space-y-4">
+          <span class="text-[9px] font-black text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3 py-1 rounded-full">Lifetime Master Access</span>
+          <h4 class="text-2xl font-black gold-metallic-text">Complete Master Drive Access</h4>
+          <div class="text-4xl font-black text-white">₹999</div>
+          <div class="bg-gold/10 p-4 rounded-xl border border-gold/20">
+            <p class="text-xs font-bold text-gold">रेफरल आय: ₹499 (50% Instant)</p>
+          </div>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIEpw4EU8bqPSxkH_Ku9RCabSyw4RrrZ32ydbLHTo-wPIohw/viewform?usp=header" target="_blank" class="btn-reg-premium w-full text-xs">Unlock Everything @ ₹999</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OFFICIAL CONTACT HUB -->
+  <section id="contact" class="glass-card-premium p-10 bg-black/50">
+    <h2 class="gold-metallic-text text-2xl font-black text-center mb-8 uppercase tracking-widest">IOIS Official Contact Hub</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-[11px] font-bold">
+      <div class="flex items-center gap-4 p-4 bg-slate-900 rounded-2xl border border-slate-800">
+        <i class="fa-brands fa-whatsapp text-2xl text-emerald-500"></i>
+        <div><p class="text-slate-500">WhatsApp Helpline</p><p class="text-white">+91 8877490845</p></div>
+      </div>
+      <div class="flex items-center gap-4 p-4 bg-slate-900 rounded-2xl border border-slate-800">
+        <i class="fa-brands fa-telegram text-2xl text-sky-500"></i>
+        <div><p class="text-slate-500">Telegram Main Bot</p><p class="text-white">@helpiois_bot</p></div>
+      </div>
+      <div class="flex items-center gap-4 p-4 bg-slate-900 rounded-2xl border border-slate-800">
+        <i class="fa-brands fa-telegram text-2xl text-amber-500"></i>
+        <div><p class="text-slate-500">Support Channel</p><p class="text-white">@ioisplatform</p></div>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer class="bg-black py-10 border-t border-gold/20">
-  <div class="container mx-auto px-6 text-center space-y-6">
-    <h1 class="gold-glow text-2xl font-black uppercase">IOIS PLATFORM</h1>
-    <div class="flex justify-center gap-6 text-xl">
-      <a href="https://t.me/ioisplatform" class="text-blue-400 hover:scale-125 transition"><i class="fa-brands fa-telegram"></i></a>
-      <a href="https://t.me/helpiois_bot" class="text-amber-400 hover:scale-125 transition"><i class="fa-solid fa-robot"></i></a>
-      <a href="mailto:ioisplatform@gmail.com" class="text-red-400 hover:scale-125 transition"><i class="fa-solid fa-envelope"></i></a>
-    </div>
-    <p class="text-[10px] text-slate-600 uppercase tracking-widest font-bold">
-      © 2026 IOIS National Digital Project. All Rights Reserved.
-    </p>
+<footer class="text-center py-12 border-t border-slate-900 bg-slate-950 text-slate-500 text-[10px] uppercase font-bold tracking-[4px]">
+  <div class="container mx-auto space-y-4">
+    <p class="gold-metallic-text text-sm tracking-normal">IOIS PLATFORM — Supporting Indian Success</p>
+    <p>© 2026 IOIS National Digital Project. All Rights Reserved.</p>
   </div>
 </footer>
 
 <script>
-  // 12-Digit Classic Analog Clock
+  // 12-Digit Classic Clock Script
   function updateClock() {
     const now = new Date();
-    const sec = now.getSeconds();
-    const min = now.getMinutes();
-    const hour = now.getHours();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const s = now.getSeconds();
 
-    const secDeg = (sec / 60) * 360;
-    const minDeg = (min / 60) * 360 + (sec / 60) * 6;
-    const hourDeg = (hour % 12 / 12) * 360 + (min / 60) * 30;
+    const hDeg = (h % 12 / 12) * 360 + (m / 60) * 30;
+    const mDeg = (m / 60) * 360;
+    const sDeg = (s / 60) * 360;
 
-    document.getElementById('h-sec').style.transform = `rotate(${secDeg}deg)`;
-    document.getElementById('h-min').style.transform = `rotate(${minDeg}deg)`;
-    document.getElementById('h-hour').style.transform = `rotate(${hourDeg}deg)`;
+    document.getElementById('hour-hand').style.transform = `rotate(${hDeg}deg)`;
+    document.getElementById('min-hand').style.transform = `rotate(${mDeg}deg)`;
+    document.getElementById('sec-hand').style.transform = `rotate(${sDeg}deg)`;
   }
   setInterval(updateClock, 1000);
   updateClock();
+
+  // Selection Logic
+  function toggleService(type) {
+    document.querySelectorAll('.hidden-section').forEach(s => s.style.display = 'none');
+    document.getElementById(type + '-result').style.display = 'block';
+    document.getElementById(type + '-result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 </script>
 
 </body>
